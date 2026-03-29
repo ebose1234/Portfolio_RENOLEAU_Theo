@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Théo Renoleau — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0C0B09;
+    --bg-elevated: #141310;
+    --bg-card: #1A1916;
+    --cream: #E8E0D0;
+    --cream-muted: #A89F8E;
+    --gold: #C4A265;
+    --gold-dim: #8B7545;
+    --gold-bright: #D4B87A;
+    --white: #F5F0E8;
+    --dark-line: #2A2720;
+    --serif: 'Cormorant Garamond', 'Georgia', serif;
+    --serif-body: 'Libre Caslon Text', 'Georgia', serif;
+    --sans: 'DM Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg);
+    color: var(--cream);
+    font-family: var(--sans);
+    overflow-x: hidden;
+  }
+
+  body { background: var(--bg); min-height: 100vh; }
+
+  ::selection { background: var(--gold); color: var(--bg); }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(12, 11, 9, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--dark-line);
+    transition: all 0.4s ease;
+  }
+  nav.scrolled { padding: 14px 48px; }
+
+  .nav-logo {
+    font-family: var(--serif); font-size: 1.5rem; font-weight: 300;
+    letter-spacing: 0.15em; color: var(--gold); text-decoration: none; text-transform: uppercase;
+  }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-family: var(--sans); font-size: 0.72rem; font-weight: 400;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-muted);
+    text-decoration: none; position: relative; transition: color 0.3s ease;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+    background: var(--gold); transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; background: none; border: none; padding: 4px;
+  }
+  .hamburger span { display: block; width: 24px; height: 1px; background: var(--gold); transition: all 0.3s ease; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 48px 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 30% 40%, rgba(196,162,101,0.04) 0%, transparent 60%);
+    animation: heroGlow 8s ease-in-out infinite alternate;
+  }
+  @keyframes heroGlow {
+    0% { opacity: 0.6; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.05); }
+  }
+
+  .hero-text { position: relative; z-index: 2; }
+  .hero-pre {
+    font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.35em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 32px;
+    opacity: 0; animation: fadeUp 1s ease 0.2s forwards;
+  }
+  .hero h1 {
+    font-family: var(--serif); font-size: clamp(3rem, 6vw, 6rem); font-weight: 300;
+    line-height: 1.05; letter-spacing: -0.01em; color: var(--white); margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 1s ease 0.4s forwards;
+  }
+  .hero h1 em { font-style: italic; font-weight: 300; color: var(--gold); }
+  .hero-sub {
+    font-family: var(--serif-body); font-size: 1.05rem; color: var(--cream-muted);
+    font-weight: 400; letter-spacing: 0.02em; max-width: 460px; line-height: 1.7;
+    opacity: 0; animation: fadeUp 1s ease 0.6s forwards;
+  }
+
+  .hero-image-wrap {
+    position: relative; z-index: 2;
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; animation: fadeUp 1.2s ease 0.5s forwards;
+  }
+  .hero-portrait {
+    width: 380px; height: 460px; object-fit: cover;
+    border: 1px solid var(--dark-line);
+    filter: grayscale(20%) contrast(1.05);
+    transition: filter 0.5s ease;
+  }
+  .hero-portrait:hover { filter: grayscale(0%) contrast(1.1); }
+  .hero-image-wrap::before {
+    content: ''; position: absolute; top: -12px; left: -12px; right: 12px; bottom: 12px;
+    border: 1px solid var(--gold-dim); z-index: -1;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTIONS */
+  section { padding: 120px 48px; max-width: 1200px; margin: 0 auto; position: relative; }
+
+  .section-label {
+    font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.35em;
+    text-transform: uppercase; color: var(--gold-dim); margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300;
+    color: var(--white); margin-bottom: 48px; line-height: 1.2;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  .divider { width: 100%; height: 1px; background: var(--dark-line); }
+  .divider-gold { width: 60px; height: 1px; background: var(--gold-dim); margin-bottom: 40px; }
+
+  /* ABOUT */
+  #about { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .about-text p {
+    font-family: var(--serif-body); font-size: 0.95rem; line-height: 1.85;
+    color: var(--cream-muted); margin-bottom: 24px;
+  }
+  .about-text p strong { color: var(--cream); font-weight: 700; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 48px; }
+  .stat { border-top: 1px solid var(--dark-line); padding-top: 16px; }
+  .stat-number { font-family: var(--serif); font-size: 2.5rem; font-weight: 300; color: var(--gold); line-height: 1; }
+  .stat-desc { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-muted); margin-top: 8px; }
+
+  /* GALLERY */
+  .gallery-section { padding: 100px 48px; max-width: 1400px; margin: 0 auto; }
+  .gallery-section .section-title { margin-bottom: 56px; }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+  .gallery-item {
+    position: relative; overflow: hidden; aspect-ratio: 4/3;
+    background: var(--bg-card); cursor: default;
+  }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(30%) contrast(1.05) brightness(0.9);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .gallery-item:hover img {
+    filter: grayscale(0%) contrast(1.1) brightness(1);
+    transform: scale(1.04);
+  }
+  .gallery-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 20px 16px 16px;
+    background: linear-gradient(to top, rgba(12,11,9,0.9) 0%, transparent 100%);
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+  }
+  .gallery-item:hover .gallery-caption { transform: translateY(0); }
+  .gallery-caption span {
+    font-family: var(--serif); font-size: 0.95rem; color: var(--white); font-weight: 400;
+  }
+  .gallery-caption small {
+    display: block; font-family: var(--sans); font-size: 0.6rem;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-dim); margin-top: 4px;
+  }
+  .gallery-item.wide { grid-column: span 2; }
+
+  /* IMAGE STRIP */
+  .img-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px;
+    max-width: 1400px; margin: 0 auto; padding: 0 48px;
+  }
+  .img-strip img {
+    width: 100%; aspect-ratio: 16/9; object-fit: cover;
+    filter: grayscale(30%) contrast(1.1) brightness(0.85);
+    transition: filter 0.5s ease;
+    border: 1px solid var(--dark-line);
+  }
+  .img-strip img:hover { filter: grayscale(0%) contrast(1.1) brightness(1); }
+
+  .strip-label {
+    font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.35em;
+    text-transform: uppercase; color: var(--gold-dim); margin-bottom: 20px;
+  }
+
+  /* EXPERTISE */
+  .expertise-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; background: var(--dark-line); margin-top: 20px;
+  }
+  .expertise-card {
+    background: var(--bg); padding: 48px 36px; position: relative;
+    overflow: hidden; transition: all 0.5s ease; cursor: default;
+  }
+  .expertise-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+    background: var(--gold); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .expertise-card:hover::before { transform: scaleX(1); }
+  .expertise-card:hover { background: var(--bg-elevated); }
+  .expertise-num {
+    font-family: var(--serif); font-size: 3rem; font-weight: 300;
+    color: var(--dark-line); margin-bottom: 24px; transition: color 0.4s ease;
+  }
+  .expertise-card:hover .expertise-num { color: var(--gold-dim); }
+  .expertise-card h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--white); margin-bottom: 16px; }
+  .expertise-card p { font-family: var(--sans); font-size: 0.82rem; line-height: 1.7; color: var(--cream-muted); }
+  .expertise-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .tool-tag {
+    font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 5px 12px; border: 1px solid var(--dark-line);
+    color: var(--cream-muted); transition: all 0.3s ease;
+  }
+  .expertise-card:hover .tool-tag { border-color: var(--gold-dim); color: var(--gold-bright); }
+
+  /* PROJECTS */
+  .projects-list { display: flex; flex-direction: column; }
+  .project-row {
+    display: grid; grid-template-columns: 80px 1fr 200px 120px;
+    align-items: center; gap: 32px; padding: 32px 24px;
+    background: var(--bg); border-bottom: 1px solid var(--dark-line);
+    cursor: pointer; transition: all 0.4s ease; position: relative;
+  }
+  .project-row::before {
+    content: ''; position: absolute; left: 0; top: 0; width: 2px; height: 100%;
+    background: var(--gold); transform: scaleY(0); transform-origin: top;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .project-row:hover::before { transform: scaleY(1); }
+  .project-row:hover { background: var(--bg-elevated); padding-left: 36px; }
+  .project-idx { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; color: var(--gold-dim); }
+  .project-name { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: var(--white); }
+  .project-cat { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-muted); text-align: right; }
+  .project-arrow { font-family: var(--serif); font-size: 1.4rem; color: var(--gold-dim); text-align: right; transition: all 0.3s ease; }
+  .project-row:hover .project-arrow { color: var(--gold); transform: translateX(4px); }
+
+  .project-detail {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding 0.5s ease;
+    background: var(--bg-card); padding: 0 24px;
+  }
+  .project-detail.open { max-height: 600px; padding: 36px 24px; }
+  .project-detail-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
+  .project-detail p { font-family: var(--serif-body); font-size: 0.9rem; line-height: 1.8; color: var(--cream-muted); }
+  .project-detail-img {
+    width: 100%; aspect-ratio: 16/10; object-fit: cover;
+    border: 1px solid var(--dark-line);
+    filter: grayscale(20%) contrast(1.05) brightness(0.9);
+  }
+
+  /* MARQUEE */
+  .marquee-section {
+    padding: 60px 0; overflow: hidden;
+    border-top: 1px solid var(--dark-line); border-bottom: 1px solid var(--dark-line);
+  }
+  .marquee-track { display: flex; width: max-content; animation: marquee 30s linear infinite; }
+  .marquee-item {
+    font-family: var(--serif); font-size: 4rem; font-weight: 300;
+    color: var(--dark-line); white-space: nowrap; padding: 0 40px; transition: color 0.4s ease;
+  }
+  .marquee-item:hover { color: var(--gold-dim); }
+  .marquee-dot { color: var(--gold-dim); padding: 0 20px; font-family: var(--serif); font-size: 4rem; font-weight: 300; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* CONTACT */
+  #contact { text-align: center; padding: 140px 48px; }
+  #contact .section-title { margin-bottom: 24px; }
+  .contact-subtitle {
+    font-family: var(--serif-body); font-size: 1rem; color: var(--cream-muted);
+    margin-bottom: 56px; line-height: 1.7; max-width: 500px; margin-left: auto; margin-right: auto;
+  }
+  .contact-links { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
+  .contact-link {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    text-decoration: none; color: var(--cream-muted); transition: all 0.3s ease;
+    padding: 24px 32px; border: 1px solid transparent;
+  }
+  .contact-link:hover { color: var(--gold); border-color: var(--dark-line); background: var(--bg-elevated); }
+  .contact-icon { font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; }
+  .contact-value { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; }
+
+  footer {
+    padding: 40px 48px; border-top: 1px solid var(--dark-line);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer span { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--cream-muted); }
+
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 1000px) {
+    .hero { grid-template-columns: 1fr; text-align: center; padding: 120px 24px 60px; gap: 40px; }
+    .hero-sub { margin: 0 auto; }
+    .hero-portrait { width: 280px; height: 340px; }
+    .hero-image-wrap::before { top: -8px; left: -8px; right: 8px; bottom: 8px; }
+  }
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .nav-links.open {
+      display: flex; flex-direction: column; position: absolute;
+      top: 100%; left: 0; right: 0; background: rgba(12,11,9,0.97);
+      padding: 32px 24px; gap: 24px; border-bottom: 1px solid var(--dark-line);
+    }
+    section, .gallery-section { padding: 80px 24px; }
+    #about { grid-template-columns: 1fr; gap: 40px; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item.wide { grid-column: span 1; }
+    .project-row { grid-template-columns: 50px 1fr; gap: 16px; }
+    .project-cat, .project-arrow { display: none; }
+    .project-detail-inner { grid-template-columns: 1fr; }
+    .img-strip { grid-template-columns: 1fr 1fr; padding: 0 24px; }
+    .marquee-item, .marquee-dot { font-size: 2.5rem; }
+    .contact-links { flex-direction: column; align-items: center; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">Théo Renoleau</a>
+  <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#cao">CAO</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-pre">Étudiant Ingénieur — ESEO Angers</p>
+    <h1>Théo<br><em>Renoleau</em></h1>
+    <p class="hero-sub">Électronique, informatique embarquée &amp; conception — une approche rigoureuse au service de projets ambitieux.</p>
+  </div>
+  <div class="hero-image-wrap">
+    <img class="hero-portrait" src="https://framerusercontent.com/images/AyDzaHDcAfx4TNxRntFCg7ZFFo.png?width=610&height=620" alt="Théo Renoleau">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text reveal">
+    <p class="section-label">01 — À propos</p>
+    <h2 class="section-title">Un ingénieur en <em>devenir</em></h2>
+    <div class="divider-gold"></div>
+    <p>Étudiant ingénieur à l'<strong>ESEO</strong> avec une expérience internationale en Irlande, je suis spécialisé en électronique et informatique. Ma polyvalence me permet de naviguer entre le hardware et le software avec la même aisance.</p>
+    <p>Je maîtrise les outils de conception hardware (<strong>Altium, KiCad</strong>), software (<strong>C++, Java, Python</strong>) et 3D (<strong>Fusion 360, SolidWorks, Blender</strong>). Passionné par l'innovation technique, je cherche à intégrer un <strong>cursus en apprentissage dès 2026</strong>.</p>
+    <p>En dehors de l'ingénierie, je construis des drones autonomes, je filme des paysages au drone et je cuisine.</p>
+  </div>
+  <div class="about-stats reveal">
+    <div class="stat"><div class="stat-number">3</div><div class="stat-desc">Domaines d'expertise</div></div>
+    <div class="stat"><div class="stat-number">6+</div><div class="stat-desc">Langages maîtrisés</div></div>
+    <div class="stat"><div class="stat-number">5+</div><div class="stat-desc">Projets personnels</div></div>
+    <div class="stat"><div class="stat-number">1</div><div class="stat-desc">Expérience internationale</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CAO GALLERY -->
+<div class="gallery-section" id="cao">
+  <p class="section-label reveal">02 — Conception &amp; Fabrication</p>
+  <h2 class="section-title reveal">CAO &amp; <em>Usinage</em></h2>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item wide">
+      <img src="https://framerusercontent.com/images/rbjDTRz5AxWCMkdvkX0xw7jxQ.png?width=786&height=580" alt="Drone autonome">
+      <div class="gallery-caption"><span>Drone Autonome</span><small>Projet personnel · PLA-LW</small></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://framerusercontent.com/images/8xN6pn7pfR9wHweyutWUrq088E.png?width=1920&height=1080" alt="Boitier PCB">
+      <div class="gallery-caption"><span>Boîtier PCB</span><small>Projet ESEO</small></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://framerusercontent.com/images/nsCZTM5MuZR0E4doL9m0YxQzB0.png?width=1920&height=1080" alt="Roue d'aspirateur">
+      <div class="gallery-caption"><span>Roue d'aspirateur</span><small>Réparation · Impression 3D</small></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://framerusercontent.com/images/o5zom5nj6o59Pnutm1R5S1GA72c.png?width=1920&height=1080" alt="Capuchon décoratif">
+      <div class="gallery-caption"><span>Capuchon décoratif</span><small>Siège de bureau</small></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://framerusercontent.com/images/kF4eAG8SPYL79YXvrUzyTrMC9Y.png?width=545&height=570" alt="Diffuseur piscine">
+      <div class="gallery-caption"><span>Diffuseur de filtration</span><small>Piscine · Réparation</small></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://framerusercontent.com/images/WZWVEvzA2HT9OuJqQd2EqnvULp0.png?width=632&height=577" alt="Porte stylo">
+      <div class="gallery-caption"><span>Porte-Stylo</span><small>Accessoire</small></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://framerusercontent.com/images/s8ySnJIMiuSLenfVLmOFH2HMGYc.png?width=1920&height=1080" alt="Dessous de plat">
+      <div class="gallery-caption"><span>Dessous de plat</span><small>Tasse à café</small></div>
+    </div>
+    <div class="gallery-item wide">
+      <img src="https://framerusercontent.com/images/dsgBXTMSs6cUQ6xYUpBJrmyFxEY.png?width=900&height=675" alt="Bambulab A1">
+      <div class="gallery-caption"><span>Bambulab A1</span><small>Impression FDM · PLA / PETG / PLA-LW</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- PLANS TECHNIQUES -->
+<div style="max-width:1400px; margin:0 auto; padding:24px 48px 0;">
+  <p class="strip-label reveal">Documentation &amp; Plans techniques</p>
+  <div class="img-strip reveal">
+    <img src="https://framerusercontent.com/images/NfNFH9STA8tQg7E4nNTfLHDnW4U.jpeg?width=979&height=689" alt="Plan 1">
+    <img src="https://framerusercontent.com/images/0Bd6aG8Sa7wUZenlyELrZTtZnNI.jpeg?width=987&height=705" alt="Plan 2">
+    <img src="https://framerusercontent.com/images/v8pBnA5jFGYUGN80akFclvA3Ks.jpeg?width=860&height=607" alt="Plan 3">
+    <img src="https://framerusercontent.com/images/jS2irknWV7ekBKtZRtLR5FFm1Xg.jpeg?width=941&height=669" alt="Plan 4">
+  </div>
+</div>
+
+<div class="divider" style="margin-top:100px;"></div>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Altium</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">KiCad</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Fusion 360</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">SolidWorks</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Blender</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">C++</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Java</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Python</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">MATLAB</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">STM32</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Linux</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Docker</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Altium</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">KiCad</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Fusion 360</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">SolidWorks</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Blender</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">C++</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Java</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Python</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">MATLAB</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">STM32</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Linux</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Docker</span><span class="marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <p class="section-label reveal">03 — Expertise</p>
+  <h2 class="section-title reveal">Domaines de <em>compétence</em></h2>
+  <div class="expertise-grid reveal">
+    <div class="expertise-card">
+      <div class="expertise-num">I</div>
+      <h3>Conception &amp; CAO</h3>
+      <p>Modélisation 3D, prototypage, impression FDM. Du concept au produit fini — réparations, boîtiers PCB, drones, objets fonctionnels.</p>
+      <div class="expertise-tools">
+        <span class="tool-tag">Fusion 360</span><span class="tool-tag">SolidWorks</span>
+        <span class="tool-tag">Blender</span><span class="tool-tag">Bambulab A1</span>
+      </div>
+    </div>
+    <div class="expertise-card">
+      <div class="expertise-num">II</div>
+      <h3>Développement</h3>
+      <p>Programmation embarquée, applications, sites web. Environnement Linux, Docker. Firmware STM32 et interfaces dashboard.</p>
+      <div class="expertise-tools">
+        <span class="tool-tag">C / C++</span><span class="tool-tag">Java</span>
+        <span class="tool-tag">Python</span><span class="tool-tag">MATLAB</span>
+        <span class="tool-tag">HTML/CSS/JS</span><span class="tool-tag">Linux</span>
+      </div>
+    </div>
+    <div class="expertise-card">
+      <div class="expertise-num">III</div>
+      <h3>Électronique</h3>
+      <p>Conception de PCB, schématique, routage. Prototypage de cartes et intégration hardware-software.</p>
+      <div class="expertise-tools">
+        <span class="tool-tag">Altium</span><span class="tool-tag">KiCad</span>
+        <span class="tool-tag">LTSpice</span><span class="tool-tag">STM32</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ELECTRONICS STRIP -->
+<div style="max-width:1400px; margin:0 auto; padding:0 48px;">
+  <p class="strip-label reveal">Réalisations électroniques</p>
+  <div class="img-strip reveal">
+    <img src="https://framerusercontent.com/images/2SAf1ZUgVsCPagLmwMVNw4JE.png?width=1920&height=1080" alt="PCB">
+    <img src="https://framerusercontent.com/images/GZ0rLZGq5JyT5Wr5LhVZ8EMY8gY.png?width=1490&height=727" alt="Schématique">
+    <img src="https://framerusercontent.com/images/I8NOJGNWOA6GvNskl6vlhgJI.png?width=1242&height=538" alt="Routage">
+    <img src="https://framerusercontent.com/images/qmCghnhz2byU4tv6CmvPIz7umb8.png?width=1857&height=752" alt="Simulation">
+  </div>
+</div>
+
+<!-- DEV STRIP -->
+<div style="max-width:1400px; margin:40px auto 0; padding:0 48px;">
+  <p class="strip-label reveal">Développement &amp; Interfaces</p>
+  <div class="img-strip reveal">
+    <img src="https://framerusercontent.com/images/Xockf0dniDduYxHX0w7z0zDOXJ0.jpg?width=1920&height=1032" alt="Site web">
+    <img src="https://framerusercontent.com/images/PJJbiL5TiknaHJyAuY9aoK0DuYw.jpeg?width=1300&height=921" alt="Dashboard">
+    <img src="https://framerusercontent.com/images/g8w4s0NgEh723PbNoZEPMwmaBw.png?width=1256&height=708" alt="Linux">
+    <img src="https://framerusercontent.com/images/im86PjQY301ojvtqYkCsObi3pY.png?width=522&height=770" alt="Slicer">
+  </div>
+</div>
+
+<!-- MORE ELECTRONICS -->
+<div style="max-width:1400px; margin:40px auto 0; padding:0 48px;">
+  <div class="img-strip reveal">
+    <img src="https://framerusercontent.com/images/ctRhRv6yLT26dP46R8cReccmKX8.png?width=5020&height=1836" alt="PCB layout">
+    <img src="https://framerusercontent.com/images/J02ZUHk9iPpq2BfbOOkog4BvQ7g.png?width=1224&height=499" alt="Routage 2">
+    <img src="https://framerusercontent.com/images/aHMUa6fFqPkNt97kGQ0IbZAQi4I.png?width=1258&height=568" alt="Mesures">
+    <img src="https://framerusercontent.com/images/CCS3MUWQTsxHZVOGqr06AwymfHk.png?width=330&height=135" alt="Altium">
+  </div>
+</div>
+
+<div class="divider" style="margin-top:100px;"></div>
+
+<!-- PROJECTS -->
+<section id="projets">
+  <p class="section-label reveal">04 — Projets</p>
+  <h2 class="section-title reveal">Réalisations <em>sélectionnées</em></h2>
+  <div class="projects-list reveal">
+
+    <div class="project-row" onclick="toggleProject('p1')">
+      <span class="project-idx">01</span>
+      <span class="project-name">Drone Autonome</span>
+      <span class="project-cat">CAO · Électronique · Dev</span>
+      <span class="project-arrow">→</span>
+    </div>
+    <div class="project-detail" id="p1">
+      <div class="project-detail-inner">
+        <p>Conception d'un système autonome comprenant une catapulte et un drone imprimé en 3D capable de se rendre à des checkpoints sans intervention humaine. Utilisation de PLA-LW pour l'allègement structurel, firmware embarqué sur microcontrôleur, et navigation autonome par GPS.</p>
+        <img class="project-detail-img" src="https://framerusercontent.com/images/rbjDTRz5AxWCMkdvkX0xw7jxQ.png?width=786&height=580" alt="Drone">
+      </div>
+    </div>
+
+    <div class="project-row" onclick="toggleProject('p2')">
+      <span class="project-idx">02</span>
+      <span class="project-name">Traqueur ADS-B</span>
+      <span class="project-cat">Embarqué · Firmware</span>
+      <span class="project-arrow">→</span>
+    </div>
+    <div class="project-detail" id="p2">
+      <div class="project-detail-inner">
+        <p>Traqueur d'avions standalone sur STM32F429I-DISC1. Développement du firmware, décodage des trames ADS-B, affichage en temps réel. Projet en équipe de trois avec frontend RF dédié et testbench basé sur un second STM32 Nucleo.</p>
+        <img class="project-detail-img" src="https://framerusercontent.com/images/2SAf1ZUgVsCPagLmwMVNw4JE.png?width=1920&height=1080" alt="ADS-B">
+      </div>
+    </div>
+
+    <div class="project-row" onclick="toggleProject('p3')">
+      <span class="project-idx">03</span>
+      <span class="project-name">Ballon Sonde — Club Curiosity</span>
+      <span class="project-cat">Astronomie · Électronique</span>
+      <span class="project-arrow">→</span>
+    </div>
+    <div class="project-detail" id="p3">
+      <div class="project-detail-inner">
+        <p>Secrétaire du club Curiosity à l'ESEO — club d'astronomie dont l'objectif est la réalisation d'un ballon stratosphérique pour mesures atmosphériques. Participation à la conception, réalisation technique et recherche de partenaires.</p>
+        <img class="project-detail-img" src="https://framerusercontent.com/images/PJJbiL5TiknaHJyAuY9aoK0DuYw.jpeg?width=1300&height=921" alt="Dashboard ballon sonde">
+      </div>
+    </div>
+
+    <div class="project-row" onclick="toggleProject('p4')">
+      <span class="project-idx">04</span>
+      <span class="project-name">Serveur Domotique</span>
+      <span class="project-cat">IoT · Linux</span>
+      <span class="project-arrow">→</span>
+    </div>
+    <div class="project-detail" id="p4">
+      <div class="project-detail-inner">
+        <p>Reconversion d'un ancien ordinateur en serveur Home Assistant. Création de routines domotiques et intégration d'objets connectés personnalisés sur ESP32 via ESPHome.</p>
+        <img class="project-detail-img" src="https://framerusercontent.com/images/8IXWMZwdpJNZDPPMru97ETHKGeU.png?width=512&height=512" alt="Home Assistant">
+      </div>
+    </div>
+
+    <div class="project-row" onclick="toggleProject('p5')">
+      <span class="project-idx">05</span>
+      <span class="project-name">Mini-Fusée</span>
+      <span class="project-cat">CAO · Usinage</span>
+      <span class="project-arrow">→</span>
+    </div>
+    <div class="project-detail" id="p5">
+      <div class="project-detail-inner">
+        <p>Modification et usinage des pièces d'une BerryRocket. Conception et impression 3D de composants sur mesure pour optimiser les performances de vol.</p>
+        <img class="project-detail-img" src="https://framerusercontent.com/images/DeVAIUAESCzfUeqE6e738eblI.jpeg?width=924&height=952" alt="Mini-fusée">
+      </div>
+    </div>
+
+    <div class="project-row" onclick="toggleProject('p6')">
+      <span class="project-idx">06</span>
+      <span class="project-name">Vidéographie Drone</span>
+      <span class="project-cat">Création · DJI Mini 3</span>
+      <span class="project-arrow">→</span>
+    </div>
+    <div class="project-detail" id="p6">
+      <div class="project-detail-inner">
+        <p>Réalisation de prises de vue aériennes et de montages vidéo de paysages avec un DJI Mini 3. Post-production et montage cinématographique.</p>
+        <img class="project-detail-img" src="https://framerusercontent.com/images/okt54msz38NW0R2DbOTooeayf4A.png?width=1566&height=411" alt="BerryRocket">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label reveal">05 — Contact</p>
+  <h2 class="section-title reveal">Prenons <em>contact</em></h2>
+  <p class="contact-subtitle reveal">Disponible pour un cursus en apprentissage à partir de 2026. N'hésitez pas à me contacter.</p>
+  <div class="contact-links reveal">
+    <a href="mailto:theo.ren.boi@gmail.com" class="contact-link">
+      <span class="contact-icon">Email</span>
+      <span class="contact-value">theo.ren.boi@gmail.com</span>
+    </a>
+    <a href="https://www.linkedin.com/in/theo-renoleau" target="_blank" class="contact-link">
+      <span class="contact-icon">LinkedIn</span>
+      <span class="contact-value">theo-renoleau</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Théo Renoleau</span>
+  <span style="font-family: var(--serif); font-style: italic; color: var(--gold-dim);">Angers, France</span>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  function toggleProject(id) {
+    const el = document.getElementById(id);
+    document.querySelectorAll('.project-detail').forEach(d => { if (d.id !== id) d.classList.remove('open'); });
+    el.classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open'));
+  });
+</script>
+</body>
+</html>
