@@ -236,6 +236,22 @@
   #drone-canvas:active { cursor: grabbing; }
   #drone-viewer .gallery-caption { transform: translateY(0); opacity: 0.7; transition: opacity 0.4s ease; }
   #drone-viewer:hover .gallery-caption { opacity: 1; }
+  #drone-loader {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    pointer-events: none; transition: opacity 0.5s ease;
+  }
+  #drone-loader.hidden { opacity: 0; }
+  #drone-loader-ring {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--dark-line); border-top-color: var(--gold);
+    animation: spin 0.9s linear infinite;
+  }
+  #drone-loader span {
+    font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold-dim);
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   /* IMAGE STRIP */
   .img-strip {
@@ -474,6 +490,10 @@
   <p class="drag-hint-text reveal">Faites glisser votre souris pour faire pivoter le modèle 3D</p>
   <div id="drone-viewer" class="reveal">
     <canvas id="drone-canvas"></canvas>
+    <div id="drone-loader">
+      <div id="drone-loader-ring"></div>
+      <span>Chargement du modèle…</span>
+    </div>
     <div class="gallery-caption"><span>Drone Autonome</span><small>Projet personnel · PLA-LW · Drag pour explorer</small></div>
   </div>
   <div class="reveal" style="width:100%; margin-bottom:3px; aspect-ratio:16/9;">
@@ -586,7 +606,7 @@
 <!-- EXPERTISE -->
 <section id="expertise">
   <p class="section-label reveal">03 Expertise</p>
-  <h2 class="section-title reveal">Mes <em>compétence</em></h2>
+  <h2 class="section-title reveal">Mes <em>compétences</em></h2>
   <div class="expertise-grid reveal">
     <div class="expertise-card">
       <div class="expertise-num">I</div>
@@ -777,7 +797,7 @@
 
 <script type="module">
 import * as THREE from 'three';
-import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const canvas = document.getElementById('drone-canvas');
@@ -823,10 +843,12 @@ controls.maxPolarAngle = Math.PI * 0.75;
 renderer.domElement.addEventListener('pointerdown', () => { controls.autoRotate = false; });
 renderer.domElement.addEventListener('pointerup',   () => { controls.autoRotate = true; });
 
-// Load DRONE.obj
-const loader = new OBJLoader();
-loader.load('models/DRONE.obj',
-  (obj) => {
+// Load DRONE.glb
+const loader = new GLTFLoader();
+const droneLoader = document.getElementById('drone-loader');
+loader.load('models/DRONE.glb',
+  (gltf) => {
+    const obj = gltf.scene;
     // Center and fit to scene
     const box = new THREE.Box3().setFromObject(obj);
     const center = box.getCenter(new THREE.Vector3());
@@ -845,9 +867,10 @@ loader.load('models/DRONE.obj',
     obj.traverse((child) => { if (child.isMesh) child.material = mat; });
 
     scene.add(obj);
+    droneLoader.classList.add('hidden');
   },
   undefined,
-  (err) => console.error('Three.js — OBJ load failed:', err)
+  (err) => console.error('Three.js — GLB load failed:', err)
 );
 
 // Keep renderer sized to container
