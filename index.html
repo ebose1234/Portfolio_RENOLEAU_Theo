@@ -797,7 +797,7 @@
 
 <script type="module">
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const canvas = document.getElementById('drone-canvas');
@@ -843,12 +843,11 @@ controls.maxPolarAngle = Math.PI * 0.75;
 renderer.domElement.addEventListener('pointerdown', () => { controls.autoRotate = false; });
 renderer.domElement.addEventListener('pointerup',   () => { controls.autoRotate = true; });
 
-// Load DRONE.glb
-const loader = new GLTFLoader();
+// Load DRONE.obj
+const loader = new OBJLoader();
 const droneLoader = document.getElementById('drone-loader');
-loader.load('models/DRONE.glb',
-  (gltf) => {
-    const obj = gltf.scene;
+loader.load('models/DRONE.obj',
+  (obj) => {
     // Center and fit to scene
     const box = new THREE.Box3().setFromObject(obj);
     const center = box.getCenter(new THREE.Vector3());
@@ -870,7 +869,7 @@ loader.load('models/DRONE.glb',
     droneLoader.classList.add('hidden');
   },
   undefined,
-  (err) => console.error('Three.js — GLB load failed:', err)
+  (err) => console.error('Three.js — OBJ load failed:', err)
 );
 
 // Keep renderer sized to container
