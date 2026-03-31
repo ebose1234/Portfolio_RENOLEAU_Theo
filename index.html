@@ -231,18 +231,6 @@
   #drone-canvas:active { cursor: grabbing; }
   #drone-viewer .gallery-caption { transform: translateY(0); opacity: 0.7; transition: opacity 0.4s ease; }
   #drone-viewer:hover .gallery-caption { opacity: 1; }
-  #drag-hint {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    display: flex; flex-direction: column; align-items: center; gap: 10px;
-    color: var(--cream); pointer-events: none;
-    transition: opacity 0.6s ease;
-  }
-  #drag-hint svg { opacity: 0.75; }
-  #drag-hint span {
-    font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--gold-dim);
-  }
-  #drag-hint.hidden { opacity: 0; }
 
   /* IMAGE STRIP */
   .img-strip {
@@ -332,9 +320,8 @@
   .project-idx { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; color: var(--gold-dim); }
   .project-name { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: var(--white); }
   .project-cat { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-muted); text-align: right; }
-  .project-arrow { font-family: var(--sans); font-size: 1.2rem; color: var(--gold-dim); text-align: right; transition: all 0.35s ease; }
-  .project-row:hover .project-arrow { color: var(--gold); }
-  .project-row.open .project-arrow { color: var(--gold); transform: rotate(45deg); }
+  .project-arrow { font-family: var(--serif); font-size: 1.4rem; color: var(--gold-dim); text-align: right; transition: all 0.3s ease; }
+  .project-row:hover .project-arrow { color: var(--gold); transform: translateX(4px); }
 
   .project-detail {
     max-height: 0; overflow: hidden;
@@ -476,15 +463,7 @@
   <h2 class="section-title reveal">CAO &amp; <em>Usinage</em></h2>
   <div id="drone-viewer" class="reveal">
     <canvas id="drone-canvas"></canvas>
-    <div id="drag-hint">
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 3a3 3 0 0 1 6 0v7"/>
-        <path d="M9 10V7a3 3 0 0 0-3 3v4a6 6 0 0 0 12 0v-4"/>
-        <path d="M12 10v4"/>
-      </svg>
-      <span>Glissez pour pivoter</span>
-    </div>
-    <div class="gallery-caption"><span>Drone Autonome</span><small>Projet personnel · PLA-LW · Modèle 3D interactif</small></div>
+    <div class="gallery-caption"><span>Drone Autonome</span><small>Projet personnel · PLA-LW · Drag pour explorer</small></div>
   </div>
   <div class="reveal" style="width:100%; margin-bottom:3px; aspect-ratio:16/9;">
     <iframe style="width:100%; height:100%; display:block; border:none;" src="https://www.youtube.com/embed/MAbPsGJuT24" title="Drone Autonome - Build" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -655,14 +634,14 @@
 <!-- PROJECTS -->
 <section id="projets">
   <p class="section-label reveal">04 Projets</p>
-  <h2 class="section-title reveal">Mes <em>projets</em></h2>
+  <h2 class="section-title reveal">Mes <em> projets</em></h2>
   <div class="projects-list reveal">
 
     <div class="project-row" onclick="toggleProject('p1')">
       <span class="project-idx">01</span>
       <span class="project-name">Drone Autonome</span>
       <span class="project-cat">CAO · Électronique · Dev</span>
-      <span class="project-arrow">+</span>
+      <span class="project-arrow">→</span>
     </div>
     <div class="project-detail" id="p1">
       <div class="project-detail-inner">
@@ -675,7 +654,7 @@
       <span class="project-idx">02</span>
       <span class="project-name">Traqueur ADS-B</span>
       <span class="project-cat">Embarqué · Firmware</span>
-      <span class="project-arrow">+</span>
+      <span class="project-arrow">→</span>
     </div>
     <div class="project-detail" id="p2">
       <div class="project-detail-inner">
@@ -688,7 +667,7 @@
       <span class="project-idx">03</span>
       <span class="project-name">Ballon Sonde Club Curiosity</span>
       <span class="project-cat">Astronomie · Électronique</span>
-      <span class="project-arrow">+</span>
+      <span class="project-arrow">→</span>
     </div>
     <div class="project-detail" id="p3">
       <div class="project-detail-inner">
@@ -701,7 +680,7 @@
       <span class="project-idx">04</span>
       <span class="project-name">Serveur Domotique</span>
       <span class="project-cat">IoT · Linux</span>
-      <span class="project-arrow">+</span>
+      <span class="project-arrow">→</span>
     </div>
     <div class="project-detail" id="p4">
       <div class="project-detail-inner">
@@ -714,7 +693,7 @@
       <span class="project-idx">05</span>
       <span class="project-name">Mini-Fusée</span>
       <span class="project-cat">CAO · Usinage</span>
-      <span class="project-arrow">+</span>
+      <span class="project-arrow">→</span>
     </div>
     <div class="project-detail" id="p5">
       <div class="project-detail-inner">
@@ -727,7 +706,7 @@
       <span class="project-idx">06</span>
       <span class="project-name">Vidéographie Drone</span>
       <span class="project-cat">Création · DJI Mini 3</span>
-      <span class="project-arrow">+</span>
+      <span class="project-arrow">→</span>
     </div>
     <div class="project-detail" id="p6">
       <div class="project-detail-inner">
@@ -776,18 +755,9 @@
 
   function toggleProject(id) {
     const el = document.getElementById(id);
-    const row = el.previousElementSibling;
-    document.querySelectorAll('.project-detail').forEach(d => {
-      if (d.id !== id) { d.classList.remove('open'); d.previousElementSibling.classList.remove('open'); }
-    });
+    document.querySelectorAll('.project-detail').forEach(d => { if (d.id !== id) d.classList.remove('open'); });
     el.classList.toggle('open');
-    row.classList.toggle('open');
   }
-
-  const dragHint = document.getElementById('drag-hint');
-  document.getElementById('drone-canvas').addEventListener('pointerdown', () => {
-    dragHint.classList.add('hidden');
-  }, { once: true });
   document.querySelectorAll('.nav-links a').forEach(a => {
     a.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open'));
   });
