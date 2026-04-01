@@ -129,6 +129,32 @@
     opacity: 0; animation: fadeUp 1s ease 0.6s forwards;
   }
 
+  .hero-badges {
+    display: flex; align-items: center; gap: 12px; margin-top: 28px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 1s ease 0.8s forwards;
+  }
+  .badge-available {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold);
+    border: 1px solid var(--gold-dim); padding: 6px 14px;
+  }
+  .badge-available::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gold); flex-shrink: 0;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .btn-cv {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--bg);
+    background: var(--gold); padding: 7px 18px;
+    text-decoration: none; transition: background 0.3s ease;
+    border: 1px solid var(--gold);
+  }
+  .btn-cv:hover { background: var(--gold-bright); }
+  .btn-cv svg { width: 12px; height: 12px; fill: var(--bg); flex-shrink: 0; }
+
   .hero-image-wrap {
     position: relative; z-index: 2;
     display: flex; justify-content: center; align-items: center;
@@ -510,7 +536,14 @@
   <div class="hero-text">
     <p class="hero-pre">Étudiant Ingénieur ESEO Angers</p>
     <h1>Théo<br><em>Renoleau</em></h1>
-    <p class="hero-sub">Électronique, informatique embarquée &amp; conception une approche rigoureuse au service de projets ambitieux.</p>
+    <p class="hero-sub">Électronique, informatique embarquée &amp; conception — une approche rigoureuse au service de projets ambitieux.</p>
+    <div class="hero-badges">
+      <span class="badge-available">Disponible dès septembre 2026</span>
+      <a href="CV_Theo_RENOLEAU.pdf" download class="btn-cv">
+        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 12l-4-4h2.5V2h3v6H12L8 12zm-5 2h10v-1.5H3V14z"/></svg>
+        Télécharger mon CV
+      </a>
+    </div>
   </div>
   <div class="hero-image-wrap">
     <img class="hero-portrait" src="images/profilpic.png" alt="Théo Renoleau">
@@ -867,6 +900,10 @@
     <a href="https://www.linkedin.com/in/theo-renoleau" target="_blank" class="contact-link">
       <span class="contact-icon">LinkedIn</span>
       <span class="contact-value">theo-renoleau</span>
+    </a>
+    <a href="https://github.com/ebose1234" target="_blank" class="contact-link">
+      <span class="contact-icon">GitHub</span>
+      <span class="contact-value">ebose1234</span>
     </a>
   </div>
 </section>
