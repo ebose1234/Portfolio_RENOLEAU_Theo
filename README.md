@@ -1,4 +1,4 @@
-# Portfolio — Théo Renoleau
+# Portfolio : Théo Renoleau
 
 Portfolio d'ingénieur personnel développé en HTML, CSS et JavaScript.
 
@@ -16,10 +16,10 @@ Je recherche une **alternance de deux ans à partir de septembre 2026** (rythme 
 
 ## Contenu
 
-- **À propos** — Parcours, expérience internationale (Erasmus, Irlande) et compétences
-- **CAO & Fabrication** — Modèles 3D, impression FDM (Bambulab A1), plans techniques
-- **Expertise** — Électronique (Altium, KiCad), développement (C/C++, Python, Java, STM32), conception 3D (Fusion 360, SolidWorks)
-- **Projets** — Drone autonome, traqueur ADS-B, ballon stratosphérique, serveur domotique, mini-fusée, vidéographie drone
+- **À propos** : Parcours, expérience internationale (Erasmus, Irlande) et compétences
+- **CAO & Fabrication** : Modèles 3D, impression FDM (Bambulab A1), plans techniques
+- **Expertise** : Électronique (Altium, KiCad), développement (C/C++, Python, Java, STM32), conception 3D (Fusion 360, SolidWorks)
+- **Projets** : Drone autonome, traqueur ADS-B, ballon stratosphérique, serveur domotique, mini-fusée, vidéographie drone
 
 ---
 
