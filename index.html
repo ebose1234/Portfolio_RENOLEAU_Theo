@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Théo Renoleau — Portfolio</title>
+<title>Théo Renoleau - Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script type="importmap">
 {
@@ -161,7 +161,7 @@
     letter-spacing: 0.15em; color: var(--gold); text-decoration: none; text-transform: uppercase;
     position: relative; overflow: hidden; display: inline-block;
   }
-  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
   .nav-links a {
     font-family: var(--sans); font-size: 0.72rem; font-weight: 400;
     letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-muted);
@@ -175,6 +175,13 @@
   }
   .nav-links a:hover { color: var(--gold); }
   .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  .lang-toggle {
+    font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.2em;
+    color: var(--gold); background: none; border: 1px solid var(--gold-dim);
+    padding: 6px 12px; cursor: pointer; transition: all 0.3s ease;
+  }
+  .lang-toggle:hover { background: var(--gold); color: var(--bg); }
 
   .hamburger {
     display: none; flex-direction: column; gap: 5px;
@@ -874,6 +881,7 @@
       display: flex; flex-direction: column; position: absolute;
       top: 100%; left: 0; right: 0; background: rgba(10,9,8,0.97);
       padding: 32px 24px; gap: 24px; border-bottom: 1px solid var(--dark-line);
+      align-items: flex-start;
     }
     section, .gallery-section { padding: 90px 24px; }
     #about { grid-template-columns: 1fr; gap: 40px; }
@@ -921,6 +929,7 @@
     <li><a href="#cao">CAO</a></li>
     <li><a href="#projets">Projets</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><button id="lang-toggle" class="lang-toggle" aria-label="Switch language">EN</button></li>
   </ul>
 </nav>
 
@@ -1490,6 +1499,117 @@
   document.querySelectorAll('.nav-links a').forEach(a => {
     a.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open'));
   });
+
+  /* ===== LANGUAGE TOGGLE FR / EN ===== */
+  (function () {
+    const EN = {
+      "À propos": "About", "Compétences": "Skills", "CAO": "CAD", "Projets": "Projects",
+      "Étudiant Ingénieur ESEO Angers": "Engineering Student at ESEO Angers",
+      "Ingénieur · Embarqué · Électronique": "Engineer · Embedded · Electronics",
+      "Électronique, informatique embarquée & conception. Une approche rigoureuse au service de projets ambitieux.": "Electronics, embedded computing & design. A rigorous approach serving ambitious projects.",
+      "Disponible dès septembre 2026": "Available from September 2026",
+      "Télécharger mon CV": "Download my CV",
+      "01 À propos": "01 About",
+      "Un ingénieur": "A passionate", "passionné": "engineer",
+      "Étudiant ingénieur à l'": "Engineering student at ",
+      "avec une expérience internationale en Irlande, je suis spécialisé en électronique et informatique. Ma polyvalence me permet de naviguer entre le hardware et le software avec la même aisance.": " with international experience in Ireland, I specialize in electronics and computing. My versatility lets me move between hardware and software with equal ease.",
+      "Je maîtrise les outils de conception hardware (": "I master hardware design tools (",
+      "), software (": "), software (",
+      ") et 3D (": ") and 3D (",
+      "). Passionné par l'innovation technique, je cherche à intégrer un ": "). Passionate about technical innovation, I am looking to join a ",
+      "cursus en apprentissage dès 2026": "work-study program starting in 2026",
+      "En dehors de l'ingénierie, je construis des drones autonomes, je filme des paysages au drone et je cuisine.": "Outside of engineering, I build autonomous drones, film landscapes with a drone, and cook.",
+      "Domaines d'expertise": "Areas of expertise", "Langages maîtrisés": "Languages mastered",
+      "Projets personnels": "Personal projects", "Expérience internationale": "International experience",
+      "Parcours académique": "Academic background",
+      "2022 - 2024 · 3 semestres": "2022 - 2024 · 3 semesters",
+      "ESEO - Prépa Internationale": "ESEO - International Preparatory Cycle",
+      "Formation pluridisciplinaire en sciences de l'ingénieur, mathématiques et physique. Bases solides en électronique, informatique et conception.": "Multidisciplinary training in engineering sciences, mathematics and physics. Solid foundations in electronics, computing and design.",
+      "2025 · 1 semestre": "2025 · 1 semester",
+      "Semestre international à Munster Technological University, Cork (Irlande). Immersion en milieu anglophone, cours d'informatique ( C, java, modélisation ), projets en équipe internationale.": "International semester at Munster Technological University, Cork (Ireland). English-speaking immersion, computer science courses (C, Java, modelling), international team projects.",
+      "Irlande": "Ireland",
+      "2025 - aujourd'hui": "2025 - present",
+      "ESEO - Cursus Ingénieur Statut Etudiant": "ESEO - Engineering Program (Student Status)",
+      "Cycle ingénieur en électronique et informatique. Conception hardware et développement logiciel.": "Engineering degree in electronics and computing. Hardware design and software development.",
+      "En cours": "In progress",
+      "02 compétences": "02 skills", "Mes": "My", "compétences": "skills",
+      "Conception & CAO": "Design & CAD",
+      "Modélisation 3D, prototypage, impression FDM. Du concept au produit fini : réparations, boîtiers PCB, drones, objets fonctionnels.": "3D modelling, prototyping, FDM printing. From concept to finished product: repairs, PCB enclosures, drones, functional objects.",
+      "Développement": "Development",
+      "Programmation embarquée, applications, sites web. Environnement Linux, Docker. Firmware STM32 et interfaces dashboard.": "Embedded programming, applications, websites. Linux and Docker environment. STM32 firmware and dashboard interfaces.",
+      "Électronique": "Electronics",
+      "Conception de PCB, schématique, routage. Prototypage de cartes et intégration hardware-software.": "PCB design, schematics, routing. Board prototyping and hardware-software integration.",
+      "Réalisations électroniques": "Electronic work",
+      "Développement & Interfaces": "Development & Interfaces",
+      "03 Conception & Fabrication": "03 Design & Manufacturing",
+      "CAO &": "CAD &", "Usinage": "Machining",
+      "Faites glisser votre souris pour faire pivoter le modèle 3D": "Drag your mouse to rotate the 3D model",
+      "Chargement du modèle…": "Loading model…",
+      "Drone Autonome": "Autonomous Drone",
+      "Projet personnel · PLA-LW · Drag pour explorer": "Personal project · PLA-LW · Drag to explore",
+      "Boîtier PCB": "PCB Enclosure", "Projet ESEO": "ESEO project",
+      "Roue d'aspirateur": "Vacuum cleaner wheel", "Réparation · Impression 3D": "Repair · 3D printing",
+      "Capuchon décoratif": "Decorative cap", "Siège de bureau": "Office chair",
+      "Diffuseur de filtration": "Filtration diffuser", "Piscine · Réparation": "Pool · Repair",
+      "Porte-Stylo": "Pen holder", "Accessoire": "Accessory",
+      "Dessous de plat": "Coaster", "Tasse à café": "Coffee mug",
+      "Impression FDM · PLA / PETG / PLA-LW": "FDM printing · PLA / PETG / PLA-LW",
+      "Impression FDM": "FDM printing",
+      "Fabrication & Prototypage": "Manufacturing & Prototyping",
+      "Impression 3D": "3D printing", "Création Robot": "Robot Creation",
+      "Conception mécanique": "Mechanical design", "Mouvement Robot": "Robot Movement",
+      "Prototype · Cinématique": "Prototype · Kinematics",
+      "Documentation & Plans techniques": "Documentation & Technical drawings",
+      "04 Projets": "04 Projects", "projets": "projects",
+      "Cliquez sur un projet pour le découvrir": "Click a project to discover it",
+      "CAO · Électronique · Dev": "CAD · Electronics · Dev",
+      "Conception d'un système autonome comprenant une catapulte et un drone imprimé en 3D capable de se rendre à des checkpoints sans intervention humaine. Utilisation de PLA-LW pour l'allègement structurel, firmware embarqué sur microcontrôleur, et navigation autonome par GPS.": "Design of an autonomous system made of a catapult and a 3D-printed drone able to reach checkpoints without human intervention. PLA-LW used for structural lightening, embedded firmware on a microcontroller, and autonomous GPS navigation.",
+      "Traqueur ADS-B": "ADS-B Tracker", "Embarqué · Firmware": "Embedded · Firmware",
+      "Traqueur d'avions standalone sur STM32F429I-DISC1. Développement du firmware, décodage des trames ADS-B, affichage en temps réel. Projet en équipe de trois avec frontend RF dédié et testbench basé sur un second STM32 Nucleo.": "Standalone aircraft tracker on STM32F429I-DISC1. Firmware development, ADS-B frame decoding, real-time display. Team project of three with a dedicated RF front end and a testbench based on a second STM32 Nucleo.",
+      "Ballon Sonde Club Curiosity": "Curiosity Club Weather Balloon",
+      "Astronomie · Électronique": "Astronomy · Electronics",
+      "Secrétaire du club Curiosity à l'ESEO, club d'astronomie dont l'objectif est la réalisation d'un ballon stratosphérique pour mesures atmosphériques. Participation à la conception, réalisation technique et recherche de partenaires.": "Secretary of the Curiosity club at ESEO, an astronomy club aiming to build a stratospheric balloon for atmospheric measurements. Involved in design, technical realization and partner search.",
+      "Serveur Domotique": "Home Automation Server",
+      "Reconversion d'un ancien ordinateur en serveur Home Assistant. Création de routines domotiques et intégration d'objets connectés personnalisés sur ESP32 via ESPHome.": "Repurposing an old computer as a Home Assistant server. Creation of home automation routines and integration of custom connected devices on ESP32 via ESPHome.",
+      "Mini-Fusée": "Mini Rocket", "CAO · Usinage": "CAD · Machining",
+      "Modification et usinage des pièces d'une BerryRocket. Conception et impression 3D de composants sur mesure pour optimiser les performances de vol.": "Modification and machining of BerryRocket parts. Design and 3D printing of custom components to optimize flight performance.",
+      "Vidéographie Drone": "Drone Videography", "Création · DJI Mini 3": "Creation · DJI Mini 3",
+      "Réalisation de prises de vue aériennes et de montages vidéo de paysages avec un DJI Mini 3. Post-production et montage cinématographique.": "Aerial footage and landscape video editing with a DJI Mini 3. Post-production and cinematic editing.",
+      "Prototype Micro-ondes FPGA": "FPGA Microwave Prototype",
+      "FPGA · Vivado · Logique numérique": "FPGA · Vivado · Digital logic",
+      "Prototype d'un four à micro-ondes implémenté sur carte FPGA Basys3 avec Vivado. Conception de la logique de contrôle en VHDL : gestion du minuteur, des boutons et de l'affichage sur les 7 segments de la carte.": "Microwave oven prototype implemented on a Basys3 FPGA board with Vivado. Control logic designed in VHDL: timer, buttons and 7-segment display handling.",
+      "Protocole MQTT": "MQTT Protocol", "IoT · Réseaux · Embarqué": "IoT · Networking · Embedded",
+      "Mise en œuvre du protocole MQTT dans un contexte IoT : configuration d'un broker, publication et souscription à des topics depuis des capteurs embarqués, et supervision des données en temps réel.": "Implementation of the MQTT protocol in an IoT context: broker setup, publishing and subscribing to topics from embedded sensors, and real-time data monitoring.",
+      "Prenons": "Let's get in", "contact": "touch",
+      "À la recherche d'un cursus en apprentissage de deux ans à partir de septembre 2026. N'hésitez pas à me contacter.": "Looking for a two-year work-study program starting September 2026. Feel free to get in touch."
+    };
+
+    const btn = document.getElementById('lang-toggle');
+    function nodes() {
+      const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      const out = [];
+      while (w.nextNode()) {
+        const n = w.currentNode, p = n.parentElement;
+        if (!p || /^(SCRIPT|STYLE)$/.test(p.tagName) || p.closest('#lang-toggle')) continue;
+        out.push(n);
+      }
+      return out;
+    }
+    function setLang(lang) {
+      nodes().forEach(n => {
+        if (n.__orig === undefined) n.__orig = n.data;
+        const t = EN[n.__orig.trim()];
+        n.data = (lang === 'en' && t !== undefined) ? t : n.__orig;
+      });
+      document.documentElement.lang = lang;
+      btn.textContent = lang === 'en' ? 'FR' : 'EN';
+      try { localStorage.setItem('lang', lang); } catch (e) {}
+    }
+    btn.addEventListener('click', () => setLang(document.documentElement.lang === 'en' ? 'fr' : 'en'));
+    let saved = 'fr';
+    try { saved = localStorage.getItem('lang') || 'fr'; } catch (e) {}
+    if (saved === 'en') setLang('en');
+  })();
 </script>
 
 <script type="module">
